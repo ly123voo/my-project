@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>信息提交</title>
+    <title>信息提交和查看</title>
 </head>
 <body>
     <h1>提交信息</h1>
-    <!-- 修改后的表单 -->
+    <!-- 表单部分 -->
     <form id="submitForm" name="contact" method="POST" data-netlify="true">
         <label for="name">名字:</label>
         <input type="text" id="name" name="name" required>
@@ -21,7 +21,13 @@
     <h2>提交的内容</h2>
     <div id="submittedData"></div>
 
+    <!-- 查看所有提交内容 -->
+    <h2>查看所有提交内容</h2>
+    <button id="loadSubmissions">加载提交内容</button>
+    <pre id="submissionsContent"></pre>
+
     <script>
+        // 提交表单的脚本
         document.getElementById('submitForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value;
@@ -44,6 +50,18 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
+        });
+
+        // 加载提交内容的脚本
+        document.getElementById('loadSubmissions').addEventListener('click', function() {
+            fetch('/.netlify/functions/get-submissions')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('submissionsContent').innerText = data;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         });
     </script>
 </body>
