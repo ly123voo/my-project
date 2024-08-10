@@ -1,0 +1,3 @@
+[build]
+  publish = "src"      # 指定静态网站文件的发布目录
+  functions = "functions"  # 指定无服务器函数的目录
